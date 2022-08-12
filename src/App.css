@@ -1,5 +1,9 @@
 .App {
   text-align: center;
+  background-image: url("./assets/forest.png");
+  height: 100vh;
+  width: 100%;
+  cursor: none;
 }
 
 .App-logo {
@@ -7,21 +11,22 @@
   pointer-events: none;
 }
 
+.block {
+  width: 100px;
+  height: 100px;
+  top: 0px;
+  position: absolute;
+  transition: top 2s;
+}
+
+.block:active {
+  top: 100%;
+}
+
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {
     animation: App-logo-spin infinite 20s linear;
   }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
 }
 
 .App-link {
