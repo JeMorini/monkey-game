@@ -2,6 +2,7 @@ import logo from "./logo.svg";
 import "./App.css";
 import monkey from "./assets/giphy.gif";
 import banana from "./assets/banana.png";
+import stars from "./assets/stars.gif";
 import forest from "./assets/forest.png";
 import React, { useCallback, useEffect, useState, useRef } from "react";
 import { Banana } from "./styles";
@@ -23,6 +24,7 @@ function App() {
   const xY = myRef?.current?.offsetTop;
   const xYM = myRef2?.current?.offsetTop;
   const left = myRef?.current?.offsetLeft;
+  const leftM = myRef2?.current?.offsetLeft;
   useEffect(() => {
     // setDista(left);
     var altura = window.screen.height;
@@ -102,6 +104,16 @@ function App() {
         </h1>
         {/* <img src={forest}  /> */}
         {/* {isDown && ( */}
+        {display === "none" && (
+          <Banana
+            src={stars}
+            style={{
+              left: bananaXPosition,
+              zIndex: 100,
+            }}
+            down={isDown}
+          />
+        )}
         <Banana
           ref={myRef}
           display={display}
