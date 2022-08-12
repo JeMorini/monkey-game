@@ -3,9 +3,11 @@ import "./App.css";
 import monkey from "./assets/giphy.gif";
 import banana from "./assets/banana.png";
 import stars from "./assets/stars.gif";
-import forest from "./assets/forest.png";
 import React, { useCallback, useEffect, useState, useRef } from "react";
 import { Banana } from "./styles";
+import useSound from "use-sound";
+import Initial from "./components/Initial";
+import sound from "../src/assets/sound/mixkit-retro-game-notification-212.wav";
 
 function App() {
   const myRef = useRef();
@@ -19,12 +21,14 @@ function App() {
   const [bananaQuantity, setBananaQuantity] = useState(1);
   const [x, setX] = useState(1);
   const [y, setY] = useState(1);
-  const [starts, setStart] = useState(false);
+  const [isStart, setIsStart] = useState(false);
+  const [play] = useSound(sound);
 
   const xY = myRef?.current?.offsetTop;
   const xYM = myRef2?.current?.offsetTop;
   const left = myRef?.current?.offsetLeft;
   const leftM = myRef2?.current?.offsetLeft;
+
   useEffect(() => {
     // setDista(left);
     var altura = window.screen.height;
@@ -32,16 +36,16 @@ function App() {
     console.log(xY);
     console.log(xYM);
     console.log("AQUI", xY - xYM);
-    const teste = (altura / 100) * 85 - 100;
     setDista(xY - xYM);
     if (
       xY - xYM > 0 &&
-      starts &&
+      start &&
       globalCoords.x - left < 200 &&
       globalCoords.x - left > 0
     ) {
       setPoint(point + 1);
       setDisplay("none");
+      play();
     }
   }, [xY]);
 
@@ -61,7 +65,7 @@ function App() {
 
   function here() {
     setInterval(start, 1000);
-    setStart(true);
+    setIsStart(true);
   }
 
   useEffect(() => {
@@ -70,7 +74,7 @@ function App() {
   }, [isDown]);
 
   useEffect(() => {
-    if (isDown === false && starts && globalCoords.x - bananaXPosition < 100) {
+    if (isDown === false && isStart && globalCoords.x - bananaXPosition < 100) {
       // alert("pegou");
       // setPoint(point + 1);
     }
@@ -92,6 +96,7 @@ function App() {
 
   return (
     <div className="App" onClick={here}>
+      {!isStart && <Initial />}
       <div className="img">
         <h1 style={{ position: "absolute" }}>{point}</h1>
         <h1 style={{ position: "absolute", marginLeft: 400 }}>
