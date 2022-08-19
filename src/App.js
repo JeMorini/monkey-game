@@ -8,6 +8,7 @@ import { Banana } from "./styles";
 import useSound from "use-sound";
 import Initial from "./components/Initial";
 import sound from "../src/assets/sound/mixkit-retro-game-notification-212.wav";
+import ModalFinished from "./components/ModalFinished";
 
 function App() {
   const myRef = useRef();
@@ -22,20 +23,17 @@ function App() {
   const [x, setX] = useState(1);
   const [y, setY] = useState(1);
   const [isStart, setIsStart] = useState(false);
+  const [isFinish, setIsFinish] = useState(false);
   const [play] = useSound(sound);
 
   const xY = myRef?.current?.offsetTop;
   const xYM = myRef2?.current?.offsetTop;
   const left = myRef?.current?.offsetLeft;
-  const leftM = myRef2?.current?.offsetLeft;
 
   useEffect(() => {
     // setDista(left);
     var altura = window.screen.height;
     // console.log((altura / 100) * 85 - 100);
-    console.log(xY);
-    console.log(xYM);
-    console.log("AQUI", xY - xYM);
     setDista(xY - xYM);
     if (
       xY - xYM > 0 &&
@@ -64,19 +62,24 @@ function App() {
   }, []);
 
   function here() {
-    setInterval(start, 1000);
-    setIsStart(true);
+    var loop;
+    if (!isStart) {
+      loop = setInterval(start, 1000);
+      setIsStart(true);
+      alert("1");
+    }
   }
 
   useEffect(() => {
+    if (bananaQuantity / 2 === 20) {
+      setIsFinish(true);
+    }
     setBananaXPosition(Math.random() * (window.screen.width - 50) + 50);
     setBananaQuantity(bananaQuantity + 1);
   }, [isDown]);
 
   useEffect(() => {
     if (isDown === false && isStart && globalCoords.x - bananaXPosition < 100) {
-      // alert("pegou");
-      // setPoint(point + 1);
     }
     if (isDown === true) {
       setX(bananaXPosition);
@@ -84,61 +87,61 @@ function App() {
     setY(globalCoords.x);
   }, [bananaXPosition, globalCoords.x]);
 
-  // function start() {
-  //   setIsDown((prevState) => !prevState);
-  //   setBananaQuantity(bananaQuantity + 1);
-  // }
-
   const start = useCallback(() => {
-    setIsDown((prevState) => !prevState);
-    setDisplay("flex");
+    if (!isFinish) {
+      setIsDown((prevState) => !prevState);
+      setDisplay("flex");
+    }
   }, [bananaQuantity]);
 
   return (
     <div className="App" onClick={here}>
       {!isStart && <Initial />}
-      <div className="img">
-        <h1 style={{ position: "absolute" }}>{point}</h1>
-        <h1 style={{ position: "absolute", marginLeft: 400 }}>
-          {x.toFixed(0)}
-        </h1>
-        <h1 style={{ position: "absolute", marginLeft: 800 }}>{y}</h1>
-        <h1 style={{ position: "absolute", marginLeft: 1200 }}>{dista}</h1>
-        <h1 style={{ position: "absolute", marginLeft: 1400 }}>
-          {bananaQuantity}
-        </h1>
-        {/* <img src={forest}  /> */}
-        {/* {isDown && ( */}
-        {display === "none" && (
+      {isFinish && <ModalFinished winner={point >= 15} />}
+      {!isFinish && isStart && (
+        <div className="img">
+          <h1 style={{ position: "absolute" }}>{point}</h1>
+          <h1 style={{ position: "absolute", marginLeft: 400 }}>
+            {x.toFixed(0)}
+          </h1>
+          <h1 style={{ position: "absolute", marginLeft: 800 }}>{y}</h1>
+          <h1 style={{ position: "absolute", marginLeft: 1200 }}>{dista}</h1>
+          <h1 style={{ position: "absolute", marginLeft: 1400 }}>
+            {bananaQuantity}
+          </h1>
+          {/* <img src={forest}  /> */}
+          {/* {isDown && ( */}
+          {display === "none" && (
+            <Banana
+              src={stars}
+              style={{
+                left: bananaXPosition,
+                zIndex: 100,
+              }}
+              down={isDown}
+            />
+          )}
           <Banana
-            src={stars}
-            style={{
-              left: bananaXPosition,
-              zIndex: 100,
-            }}
+            ref={myRef}
+            display={display}
+            src={banana}
+            style={{ left: bananaXPosition }}
             down={isDown}
           />
-        )}
-        <Banana
-          ref={myRef}
-          display={display}
-          src={banana}
-          style={{ left: bananaXPosition }}
-          down={isDown}
-        />
-        {/* )} */}
-        <img
-          ref={myRef2}
-          src={monkey}
-          style={{
-            position: "absolute",
-            bottom: 0,
-            left: globalCoords.x - 200 > 0 ? globalCoords.x - 200 : 0,
-            height: 200,
-            width: 200,
-          }}
-        />
-      </div>
+          {/* )} */}
+          <img
+            ref={myRef2}
+            src={monkey}
+            style={{
+              position: "absolute",
+              bottom: 0,
+              left: globalCoords.x - 200 > 0 ? globalCoords.x - 200 : 0,
+              height: 200,
+              width: 200,
+            }}
+          />
+        </div>
+      )}
     </div>
   );
 }
