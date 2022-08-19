@@ -9,6 +9,7 @@ export const Container = styled.div`
   justify-content: center;
   height: 100vh;
   cursor: pointer;
+  z-index: 10000000;
 `;
 
 export const Logo = styled.img`

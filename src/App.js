@@ -1,4 +1,3 @@
-import logo from "./logo.svg";
 import "./App.css";
 import monkey from "./assets/giphy.gif";
 import banana from "./assets/banana.png";
@@ -17,11 +16,8 @@ function App() {
   const [bananaXPosition, setBananaXPosition] = useState(200);
   const [isDown, setIsDown] = useState(false);
   const [point, setPoint] = useState(1);
-  const [dista, setDista] = useState(1);
   const [display, setDisplay] = useState("flex");
   const [bananaQuantity, setBananaQuantity] = useState(1);
-  const [x, setX] = useState(1);
-  const [y, setY] = useState(1);
   const [isStart, setIsStart] = useState(false);
   const [isFinish, setIsFinish] = useState(false);
   const [play] = useSound(sound);
@@ -31,10 +27,6 @@ function App() {
   const left = myRef?.current?.offsetLeft;
 
   useEffect(() => {
-    // setDista(left);
-    var altura = window.screen.height;
-    // console.log((altura / 100) * 85 - 100);
-    setDista(xY - xYM);
     if (
       xY - xYM > 0 &&
       start &&
@@ -66,7 +58,6 @@ function App() {
     if (!isStart) {
       loop = setInterval(start, 1000);
       setIsStart(true);
-      alert("1");
     }
   }
 
@@ -74,17 +65,13 @@ function App() {
     if (bananaQuantity / 2 === 20) {
       setIsFinish(true);
     }
-    setBananaXPosition(Math.random() * (window.screen.width - 50) + 50);
+    setBananaXPosition(Math.random() * (window.screen.width - 50));
     setBananaQuantity(bananaQuantity + 1);
   }, [isDown]);
 
   useEffect(() => {
     if (isDown === false && isStart && globalCoords.x - bananaXPosition < 100) {
     }
-    if (isDown === true) {
-      setX(bananaXPosition);
-    }
-    setY(globalCoords.x);
   }, [bananaXPosition, globalCoords.x]);
 
   const start = useCallback(() => {
@@ -94,23 +81,22 @@ function App() {
     }
   }, [bananaQuantity]);
 
+  const restart = useCallback(() => {
+    setIsFinish(false);
+    setBananaQuantity(0);
+    setPoint(0);
+    start();
+  }, []);
+
   return (
     <div className="App" onClick={here}>
       {!isStart && <Initial />}
-      {isFinish && <ModalFinished winner={point >= 15} />}
+      {isFinish && (
+        <ModalFinished winner={point >= 15} restart={() => restart()} />
+      )}
       {!isFinish && isStart && (
         <div className="img">
-          <h1 style={{ position: "absolute" }}>{point}</h1>
-          <h1 style={{ position: "absolute", marginLeft: 400 }}>
-            {x.toFixed(0)}
-          </h1>
-          <h1 style={{ position: "absolute", marginLeft: 800 }}>{y}</h1>
-          <h1 style={{ position: "absolute", marginLeft: 1200 }}>{dista}</h1>
-          <h1 style={{ position: "absolute", marginLeft: 1400 }}>
-            {bananaQuantity}
-          </h1>
-          {/* <img src={forest}  /> */}
-          {/* {isDown && ( */}
+          <h1 style={{ position: "absolute", color: "#fff" }}> {point}</h1>
           {display === "none" && (
             <Banana
               src={stars}
@@ -128,7 +114,6 @@ function App() {
             style={{ left: bananaXPosition }}
             down={isDown}
           />
-          {/* )} */}
           <img
             ref={myRef2}
             src={monkey}

@@ -14,7 +14,7 @@ import {
   Button,
 } from "./styles";
 
-function ModalFinished({ winner }) {
+function ModalFinished({ winner, restart }) {
   return (
     <Container>
       {winner ? (
@@ -23,7 +23,7 @@ function ModalFinished({ winner }) {
             <Gif src={winnerGif} />
           </ContainerLogo>
           <Message>Você venceu</Message>
-          <Button>Jogar novamente</Button>
+          <Button onClick={() => restart()}>Jogar novamente</Button>
         </Block>
       ) : (
         <Block>
@@ -31,7 +31,7 @@ function ModalFinished({ winner }) {
             <Gif src={loserGif} />
           </ContainerLogo>
           <Message>Você perdeu</Message>
-          <Button>Tentar novamente</Button>
+          <Button onClick={() => restart()}>Tentar novamente</Button>
         </Block>
       )}
     </Container>
