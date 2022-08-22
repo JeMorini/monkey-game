@@ -4,10 +4,12 @@ export const Container = styled.div`
   flex: 1;
   background-color: #00000080;
   display: flex;
+  position: absolute;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   height: 100vh;
+  width: 100%;
   cursor: pointer;
   z-index: 10000000;
 `;

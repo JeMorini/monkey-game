@@ -2,6 +2,7 @@ import "./App.css";
 import monkey from "./assets/giphy.gif";
 import banana from "./assets/banana.png";
 import stars from "./assets/stars.gif";
+import forest from "./assets/forest.png";
 import React, { useCallback, useEffect, useState, useRef } from "react";
 import { Banana } from "./styles";
 import useSound from "use-sound";
@@ -15,9 +16,9 @@ function App() {
   const [globalCoords, setGlobalCoords] = useState({ x: 0, y: 0 });
   const [bananaXPosition, setBananaXPosition] = useState(200);
   const [isDown, setIsDown] = useState(false);
-  const [point, setPoint] = useState(1);
+  const [point, setPoint] = useState(0);
   const [display, setDisplay] = useState("flex");
-  const [bananaQuantity, setBananaQuantity] = useState(1);
+  const [bananaQuantity, setBananaQuantity] = useState(0);
   const [isStart, setIsStart] = useState(false);
   const [isFinish, setIsFinish] = useState(false);
   const [play] = useSound(sound);
@@ -90,6 +91,15 @@ function App() {
 
   return (
     <div className="App" onClick={here}>
+      <img
+        src={forest}
+        style={{
+          width: "100%",
+          height: "100%",
+          position: "absolute",
+          zIndex: 0,
+        }}
+      />
       {!isStart && <Initial />}
       {isFinish && (
         <ModalFinished winner={point >= 15} restart={() => restart()} />
