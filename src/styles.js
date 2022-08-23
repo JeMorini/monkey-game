@@ -15,4 +15,17 @@ export const Banana = styled.img`
       : `top: 0; 
   transition: top 0s;
   `}
+  @media (max-width: 1000px) {
+    display: none;
+  }
+`;
+
+export const Background = styled.img`
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  z-index: 0;
+  @media (max-width: 1000px) {
+    display: none;
+  }
 `;

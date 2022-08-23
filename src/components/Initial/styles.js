@@ -12,16 +12,35 @@ export const Container = styled.div`
   width: 100%;
   cursor: pointer;
   z-index: 100;
+  @media (max-width: 1000px) {
+    display: none;
+  }
 `;
 
 export const Logo = styled.img`
-  width: 900px;
+  width: 800px;
   height: 400px;
+  @media (max-width: 1550px) {
+    width: 600px;
+    height: 300px;
+  }
+  @media (max-width: 1250px) {
+    width: 500px;
+    height: 250px;
+  }
 `;
 
 export const Monkey = styled.img`
   width: 600px;
   height: 600px;
+  @media (max-width: 1550px) {
+    width: 500px;
+    height: 500px;
+  }
+  @media (max-width: 1250px) {
+    width: 300px;
+    height: 300px;
+  }
 `;
 
 export const ContainerLogo = styled.div`

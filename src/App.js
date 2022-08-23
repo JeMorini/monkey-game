@@ -4,11 +4,12 @@ import banana from "./assets/banana.png";
 import stars from "./assets/stars.gif";
 import forest from "./assets/forest.png";
 import React, { useCallback, useEffect, useState, useRef } from "react";
-import { Banana } from "./styles";
+import { Banana, Background } from "./styles";
 import useSound from "use-sound";
 import Initial from "./components/Initial";
 import sound from "../src/assets/sound/mixkit-retro-game-notification-212.wav";
 import ModalFinished from "./components/ModalFinished";
+import ModalSorry from "./components/ModalSorry";
 
 function App() {
   const myRef = useRef();
@@ -91,15 +92,8 @@ function App() {
 
   return (
     <div className="App" onClick={here}>
-      <img
-        src={forest}
-        style={{
-          width: "100%",
-          height: "100%",
-          position: "absolute",
-          zIndex: 0,
-        }}
-      />
+      <ModalSorry />
+      <Background src={forest} />
       {!isStart && <Initial />}
       {isFinish && (
         <ModalFinished winner={point >= 15} restart={() => restart()} />

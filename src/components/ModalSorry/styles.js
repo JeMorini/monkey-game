@@ -12,14 +12,16 @@ export const Container = styled.div`
   width: 100%;
   cursor: pointer;
   z-index: 10000000;
+  padding: 10px;
+  display: none;
   @media (max-width: 1000px) {
-    display: none;
+    display: flex;
   }
 `;
 
 export const Logo = styled.img`
-  width: 1000px;
-  height: 400px;
+  width: 600px;
+  height: 300px;
 `;
 
 export const Monkey = styled.img`
@@ -34,17 +36,18 @@ export const ContainerLogo = styled.div`
 `;
 
 export const Message = styled.h1`
-  font-size: 40px;
+  font-size: 20px;
   color: #000;
+  text-align: center;
 `;
 
 export const Gif = styled.img`
-  width: 200px;
-  height: 200px;
+  width: 150px;
+  height: 150px;
 `;
 
 export const Block = styled.div`
-  width: 50%;
+  width: 80%;
   height: 60%;
   background-color: white;
   border-radius: 18px;
