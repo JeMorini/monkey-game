@@ -1,10 +1,10 @@
 import "./App.css";
-import monkey from "./assets/giphy.gif";
+import monkey from "./assets/monkey.gif";
 import banana from "./assets/banana.png";
 import stars from "./assets/stars.gif";
 import forest from "./assets/forest.png";
 import React, { useCallback, useEffect, useState, useRef } from "react";
-import { Banana, Background } from "./styles";
+import { Banana, Background, Point, Monkey } from "./styles";
 import useSound from "use-sound";
 import Initial from "./components/Initial";
 import sound from "../src/assets/sound/mixkit-retro-game-notification-212.wav";
@@ -31,7 +31,7 @@ function App() {
   useEffect(() => {
     if (
       xY - xYM > 0 &&
-      start &&
+      isStart &&
       globalCoords.x - left < 200 &&
       globalCoords.x - left > 0
     ) {
@@ -39,7 +39,7 @@ function App() {
       setDisplay("none");
       play();
     }
-  }, [xY]);
+  }, [xY, globalCoords.x, left, play, point, xYM, isStart]);
 
   useEffect(() => {
     const handleWindowMouseMove = (event) => {
@@ -56,9 +56,8 @@ function App() {
   }, []);
 
   function here() {
-    var loop;
     if (!isStart) {
-      loop = setInterval(start, 1000);
+      setInterval(start, 1000);
       setIsStart(true);
     }
   }
@@ -100,7 +99,7 @@ function App() {
       )}
       {!isFinish && isStart && (
         <div className="img">
-          <h1 style={{ position: "absolute", color: "#fff" }}> {point}</h1>
+          <Point> {point / 2}</Point>
           {display === "none" && (
             <Banana
               src={stars}
@@ -118,16 +117,13 @@ function App() {
             style={{ left: bananaXPosition }}
             down={isDown}
           />
-          <img
+          <Monkey
             ref={myRef2}
             src={monkey}
             style={{
-              position: "absolute",
-              bottom: 0,
               left: globalCoords.x - 200 > 0 ? globalCoords.x - 200 : 0,
-              height: 200,
-              width: 200,
             }}
+            alt="monkey"
           />
         </div>
       )}

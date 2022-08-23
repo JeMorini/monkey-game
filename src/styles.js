@@ -29,3 +29,18 @@ export const Background = styled.img`
     display: none;
   }
 `;
+
+export const Point = styled.h1`
+  position: absolute;
+  color: #fff;
+  width: 100%;
+  text-align: center;
+  font-size: 60px;
+`;
+
+export const Monkey = styled.img`
+  position: absolute;
+  bottom: 0px;
+  height: 200px;
+  width: 200px;
+`;
